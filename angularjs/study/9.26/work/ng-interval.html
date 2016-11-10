@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="app/bower_components/angular/angular.js"></script>	
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body ng-controller="mycontroller">
+	<script>
+		var app = angular.module('myapp',[]);
+		app.controller('mycontroller',["$scope","$interval",function($scope,$interval){
+			// $intercal(执行函数,时间间隔,[执行次数])
+			// $intercal(Fn,时间间隔,10)
+			var count = 0;
+            var inter = $interval(function(){
+                  console.log("interval执行匿名函数" + (++count))
+            },1500,4);
+           // then (执行成功函数，执行失败函数)
+            inter.then(function(){
+            	console.log("interval执行成功")
+            },function(){
+            	console.log("interval执行失败")
+            });
+            // console.log($location.protocol());
+             $interval.cancel(inter);
+
+		}]);
+	</script>
+</body>
+</html>

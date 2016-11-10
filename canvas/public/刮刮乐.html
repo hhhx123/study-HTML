@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{margin: 0;padding: 0;}
+        p{width: 400px;height: 200px;color:red;text-align:center;line-height: 200px;font-size:50px;position:absolute;top: 0;left: 0;}
+        canvas{position:absolute;top: 0;left: 0;border:1px solid black;}
+	</style>
+</head>
+<body>
+	<p>特等奖</p>
+	<canvas id="myCanvas" width="400" height="200">
+		
+	</canvas>
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		var context = canvas.getContext('2d');
+		//做一个填充色挡住p
+        context.fillStyle = 'tan';
+        context.fillRect(0,0,canvas.width,canvas.height);
+        // 设置context的混合模式 把填充目标颜色清除掉
+        context.globalCompositeOperation = 'destination-out';
+         canvas.onmousedown = function(){
+         	// 把onmousemove写在down中可以确保move是在down之后进行
+         	canvas.onmousemove = function(e){
+         		var event = e || window.event;
+         		// 获取鼠标相对于canvas的位置
+         		var xPos = event.offsetX;
+         		var yPos = event.offsetY;
+         		context.beginPath();
+         		context.arc(xPos,yPos,10,0,Math.PI*2,false);
+         		context.fill();
+         	};
+         	canvas.onmouseup = function(e){
+                   this.onmousemove = null;
+                   this.onmouseup = null;
+         	};
+         }
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>

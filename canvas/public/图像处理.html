@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<canvas id="canvasId" width="580" height="580">
+		
+	</canvas>
+	<button id="startButton" type="button">黑白处理</button>
+	<button id="stopButton" type="button">停止处理</button>
+	<script>
+		var canvas = document.getElementById('canvasId');
+        var context = canvas.getContext('2d');
+
+        var image = new Image();
+        image.src = 'images/fd398f5494eef01f484cf8dae3fe9925bd317d8f.jpg';
+        image.onload = function(){
+        	context.drawImage(image,0,0,canvas.width,canvas.height);
+            var worker = null;
+        	var startBtn = document.getElementById('startButton');
+        	var stopBtn = document.getElementById('stopButton');
+        	startBtn.onclick = function(){
+        		var imageData = context.getImageData(0,0,canvas.width,canvas.height);
+        		// 生成worker 并指定执行的js文件
+        		worker = new Worker('processPixle.js')
+        		// 发送需要处理的数据
+        		worker.postMessage(imageData);
+
+        		// 接收处理完的数据
+        		// 接收worker发送来的postMessage
+        		worker.addEventListener('message',receiveMessage);
+        	}
+            // 参数e.date中存放发送来的数据
+        	function receiveMessage(e){
+        		var imageData = e.data;
+        		context.putImageData(imageData,0,0)
+
+        	}
+        	stopBtn.onclick = function(){
+        		// 停止掉worker;
+              worker.terminate();
+        	};
+        	
+
+        	// 处理图像数据
+        }
+	</script>
+</body>
+</html>

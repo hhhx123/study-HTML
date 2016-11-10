@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<canvas id="myCanvas" width="200" height="200" style="border:1px solid black"></canvas>
+	<button id="copyButton" type="button">copy</button>	
+	<script>
+		var canvas = document.getElementById('myCanvas');
+		
+		var context = canvas.getContext('2d');
+		var image = new Image();
+		image.src = 'images/u=1465266830,3764690936&fm=15&gp=0.jpg'
+        image.onload = function(){
+        	context.beginPath();
+        	context.drawImage(image,0,0,canvas.width,canvas.height);
+        }
+       var buttonEle = document.getElementById('copyButton');
+       buttonEle.onclick = function(){
+       	var image2 = new Image();
+       	// image/png  媒体MIME类型   png 图片
+       	// image/jpeg                jpg 图片
+       	var url = canvas.toDataURL('img/png');
+        image2.src = url;
+        // Dom appendChild
+        document.body.appendChild(image2);
+
+
+
+       }
+       // context.save();
+       // context.beginPath();
+       // // 对context的操作
+       // context.translate(100,100);
+       // context.strokeStyle = 'green';
+       // context.lineWidth = 20;
+       // context.moveTo(0,0);
+       // context.lineTo(50,50);
+       // context.stroke();
+       // context.restore();
+       // // restore 的操作，使用的是save之前的上下文环境
+       //     context.beginPath();
+       //     context.moveTo(0,0);
+       //     context.lineTo(50,50);
+       //     context.stroke();
+          
+
+
+ 
+
+
+
+
+
+
+	</script>
+</body>
+</html>

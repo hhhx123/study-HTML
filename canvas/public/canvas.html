@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+    <style>
+        .box{background:linear-gradient(to right,red,blue,green);width: 200px;height: 100px;
+            transition:all 1s;}
+            .box:hover{transform:rotateZ(360deg);}
+    </style>
+</head>
+<body>
+<!-- <div class="box"></div> -->
+    
+
+	<!-- html5 绘画操作 -->
+	<!-- canvas 画布 -->
+	<!-- 宽高默认为0 以属性的方式来写 -->
+	<canvas id="canvas" width="200" height="200" style="border:1px solid black">
+		
+	</canvas>
+	<button id="buttonProcess" type="button">黑白处理</button>
+	<script>
+	/*1：获取canvas对象
+	 
+	  */
+var canvas = document.getElementById('canvas');
+//  2:获取绘图上下文,坐标点 左上角0,0
+var context = canvas.getContext('2d');
+var button = document.getElementById('buttonProcess');
+button.onclick = function(){
+	 //提取canvas中的图片像素，然后进行黑白处理
+     // 获取像素 getImageData('矩形')
+     var imageData = context.getImageData(0,0,200,200);
+     var data = imageData.data;
+
+     // 遍历
+     for (var i = 0; i < data.length; i+=4) {
+     	// 取出每一个像素的rgba
+     	var red = data[i+0];
+     	var green = data[i+1];
+     	var blue = data[i+2];
+     	var alpha = data[i+3];
+
+     	var average = (parseInt(red)+parseInt(green)+parseInt(blue))/3;
+
+     	// 重新设置data数据
+     	data[i+0] = average;
+     	data[i+1] = average;
+     	data[i+2] = average;
+     	data[i+3] = 125;
+     }
+     imageData.data = data;
+     // 把处理好的数据重新设置到canvas上
+     context.putImageData(imageData,0,0);
+
+}
+
+//构造函数(引用类型、类)
+function CanvasHelp(){
+	// 属性写在构造函数中
+
+}
+
+// 函数写在原型中
+CanvasHelp.prototype.baseDraw = function(){
+// 设置线宽
+context.lineWidth = 10;
+// 设置描边时使用的颜色
+context.strokeStyle = "#ccc";
+// 绘制矩形  stroke 描边  fill 填充
+context.strokeRect(0,0,100,100);
+
+// 填充一个矩形 使用的是fillRect函数
+context.fillStyle = 'rgba(255,0,230,0.5)';
+context.fillRect(20,20,150,150);
+
+// 清除指定的矩形区域
+context.clearRect(50,50,100,100);
+// 全部清除
+// context.clearRect(0,0,canvas.width,canvas.height);
+}
+
+CanvasHelp.prototype.drawPath = function(){
+	// 使用canvas 绘制路径
+	context.clearRect(0,0,canvas.width,canvas.height);
+
+	// 1:告诉canvas 开始绘制全新路径
+	context.beginPath();
+	// 相当于把画笔抬起 并移动到某个坐标点
+	context.moveTo(50,50);
+    // 从画笔当前的位置，绘制一条直线，到指定的坐标点。(注意：会跟踪画笔位置)
+	context.lineTo(100,100);
+
+	context.lineTo(200,100);
+
+	// 要看到绘制的结果，必须要使用stroke 或者 fill
+	context.lineWidth = 2;
+    context.strokeStyle = 'black';
+    // 当前路径绘制结束  还会从最终点到最开始的位置，绘制一条直线，从而形成封闭的区域
+    context.closePath();
+    context.stroke();
+
+    
+}
+CanvasHelp.prototype.drawArc = function(){
+	// 使用canvas 绘制路径
+context.clearRect(0,0,canvas.width,canvas.height);
+	context.beginPath();
+	// 六个值：前两个是圆心  3：半径  4：开始的弧度  5：结束的弧度 6：是否用顺时针方向来画  flase 顺时针  true 逆时针
+	context.moveTo(100,100)
+	context.arc(100,100,50,0,Math.PI/2,false);
+    context.fillStyle = 'black';
+	context.fill();
+	
+
+}
+
+// beizierCurveTo有六个参数
+// ctrl1x,ctrl1y
+// ctrl2x,ctrl2y
+// 最终的位置 x y
+  CanvasHelp.prototype.drawBezierPath = function(){
+       
+ context.clearRect(0,0,canvas.width,canvas.height);
+ context.beginPath();
+ context.moveTo(0,0);
+context.bezierCurveTo(150,50,50,150,200,200);
+context.stroke();
+
+}      
+        
+
+
+CanvasHelp.prototype.drawImage = function(){
+	// 把图片绘制到canvas上 ，还可以获取图片的像素，然后可以编辑图片
+context.clearRect(0,0,canvas.width,canvas.height);
+ context.beginPath();
+ // 1：生成图片
+ // var img = document.creatElement('img');
+ var img = new Image();
+ img.src = 'images/bark.jpg';
+ // 2:在图片加载完成后，方可绘制到canvas上
+ img.onload = function(){
+ 	// 9个参数
+ 	// context.drawImage(img,图片x,图片y,剪切图片宽,剪切图片高,canvas目的x,canvas目的y,canvas目的宽,canvas目的高);
+ 	// drawImage 可以剪切图片 拼接图片，放大缩小
+ 	context.drawImage(img,0,0,100,100,0,0,200,200);
+
+ }
+}
+CanvasHelp.prototype.drawPathClip = function(){
+	context.clearRect(0,0,canvas.width,canvas.height);
+    context.beginPath();
+    context.moveTo(10,10);
+    context.lineTo(50,150);
+    context.lineTo(160,30);
+    context.closePath();
+    context.clip();
+    context.fillStyle = 'red';
+    context.fillRect (0,0,200,200);
+  
+}
+CanvasHelp.prototype.drawText = function(text){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.beginPath();
+    // 设置字体
+    context.font = '30px bold 宋体'
+    context.textAlign = 'center';//左右对齐方式 坐标100 在文字的中间
+    context.textBaselign = 'middle';//上下的对齐方式 20
+    // 200 期望的最大宽度
+    // 100 和textAlign一起使用  20和textBaselign一起使用
+    context.fillText(text,100,20,200);
+  } 
+
+ CanvasHelp.prototype.drawTextWidthLinearGradient= function(text){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    
+    // 需要两个坐标 并指定线性渐变的方向
+    var linearGradient = context.createLinearGradient(0,0,200,0);
+    // 2：指定线性渐变的颜色
+    linearGradient.addColorStop(0,'red');
+    linearGradient.addColorStop(0.5,'yellow');
+    linearGradient.addColorStop(1.0,'blue');
+    
+    context.beginPath();
+    context.textAline = 'center';
+    context.textBaseline = 'middle';
+    // 指定填充对象为一个线性渐变对象
+    context.fillStyle = linearGradient;
+    context.fillText(text,100,50,200);
+} 
+ 
+ CanvasHelp.prototype.drawClock= function(text){
+    context.clearRect(0,0,canvas.width,canvas.height);
+    context.beginPath();
+    // 一个刻度 需要旋转 Math.PI/6
+    // 2*Math.PI/12 = Math.PI/6;
+    // canvas 支持坐标的变换
+    // 平移 旋转 缩放
+    // translate rotate scale
+    // 平移 坐标系  100,100  作为起始点
+    // context.translate(100,100);
+    // // 已经按照新的坐标系计算
+    // context.moveTo(0,0);
+    // context.lineTo(50,50);
+    // context.strokeStyle = 'black';
+    // context.stroke(); 
+
+   // 逆时针旋转90度
+   // translate(100,100) 平移坐标 把100 100 作为新坐标系的0,0
+    context.translate(100,100);
+    context.rotate(-Math.PI/2);
+    context.arc(0,0,50,0,Math.PI/2,false);
+    context.strokeStyle = 'black';
+    context.stroke();
+   }  
+    
+    
+   // pen 就是canvasHelp 对象
+     var pen = new CanvasHelp();
+     pen.baseDraw();
+     pen.drawPath();
+     pen.drawArc();
+     pen.drawBezierPath();
+     // pen.drawImage();
+     // pen.drawPathClip();
+     pen.drawText('hello world');
+     pen.drawTextWidthLinearGradient('hello world');
+     pen.drawClock();
+
+
+
+
+
+
+    </script>
+</body>
+</html>
+    
+
+
+   
+    
+
+
+
+
+
+
+

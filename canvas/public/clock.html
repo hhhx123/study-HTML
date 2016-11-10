@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{margin: 0;padding: 0;}
+		/*canvas 若想居中 使用display:block*/
+		canvas{margin:100px auto;border:8px solid black;border-radius:120px;display:block;background:url(images/u=1465266830,3764690936&fm=15&gp=0.jpg) no-repeat center;background-size:200px 250px;}
+	</style>
+</head>
+<body>
+	<canvas id="canvas" width="200" height="200"></canvas>
+	<script  type="text/javascript" >
+		var  canvas= document.getElementById('canvas');
+		var  context = canvas.getContext('2d');
+		drawClock(); 
+         var timer = setInterval(updateClock,1000);
+         function updateClock(){
+         context.clearRect(0,0,canvas.width,canvas.height);
+         	var date = new Date();
+         	var hour = date.getHours();
+         	var minutes = date.getMinutes();
+         	var second = date.getSeconds();
+		    drawClock(); 
+
+         	// 绘制时针
+         	drawHour(hour,minutes,second);
+         	// 绘制分针
+            drawMinutes(minutes,second);
+         	// 绘制秒针
+         	drawSeconds(second);
+
+         }
+        function drawHour(hour,minutes,second){
+             // 绘制时针 
+             //计算时针需要旋转多少度
+             // 1小时 对应的弧度  Math.PI/6  hour*Math.PI/6
+             // minutes/60*Math.PI/6
+             // second/3600*Math.PI/6
+       context.save();
+       context.beginPath();
+
+       context.translate(100,100);
+       context.rotate(-Math.PI/2);
+
+      
+       var resultArc = hour*Math.PI/6+ minutes/60*Math.PI/6 + second/3600*Math.PI/6;
+        context.rotate(resultArc);
+        context.moveTo(-5,0);
+        context.lineTo(50,0);
+        context.lineWidth = 6;
+        context.strokeStyle = 'white';
+        context.stroke();
+        context.restore();
+        };
+
+
+       
+        function drawMinutes(minutes,second){
+     // 每分钟对应的弧度 Math.PI/30   minutes*Math.PI/30
+     // 先把second 转成分钟 second/60  second/60*Math.PI/30
+     // 之和就是需要旋转的弧度
+       context.save();
+       context.beginPath();
+
+       context.translate(100,100);
+       context.rotate(-Math.PI/2);
+
+       // 旋转分钟和秒对应的弧度
+       context.rotate(minutes*Math.PI/30 + second/60*Math.PI/30);
+       // 绘制分针
+        context.moveTo(-10,0);
+        context.lineTo(60,0);
+        context.lineWidth = 4;
+        context.strokeStyle = 'white';
+        context.stroke();
+        context.restore();
+        
+        
+
+        }; 
+
+       
+        function drawSeconds(second){
+        	// 每秒弧度 Math.PI/30 second 
+        	// 总体的弧度 second*Math.PI/30
+        	context.save();
+        	context.beginPath();
+        	context.translate(100,100);
+        	context.rotate(-Math.PI/2);
+        	
+
+             // 旋转秒数对应的弧度
+        	context.rotate(second*Math.PI/30);
+             // 绘制秒针
+             context.moveTo(-20,0);
+             context.lineTo(70,0);
+             context.strokeStyle = 'white';
+             context.stroke();
+
+        	context.restore();
+          
+        };
+
+		function drawClock(){
+         // 把以前的关于context的设置  包括坐标系的操作 包括线宽 颜色 fillStyle,strokeStyle,lineWidth.....设置先保存起来。目的是为了以后的恢复设置
+         // 左上角为0,0
+		 context.save();
+         context.beginPath();
+         // 绘制小时的刻度
+         // 修改坐标系  100,100作为新坐标系的0,0
+         context.translate(100,100);
+         context.rotate(-Math.PI/2);
+         
+
+         
+         // 每一个刻度PI/6
+         for (var i = 0; i < 12;i++) {
+         	context.moveTo(75,0);
+         	context.lineTo(90,0);
+            context.lineWidth = 3;
+            context.stroke();
+           // 每次把坐标系开始旋转
+           context.rotate(-Math.PI/6);
+             context.strokeStyle = 'grey';
+
+
+         }
+
+          // 绘制分钟的刻度
+          // 每一个分钟的刻度 2*Math.PI/60 = Math.PI/30
+         context.beginPath();
+         for (var j = 0; j < 60; j++) {
+         	 context.moveTo(80,0);
+         	 context.lineTo(85,0);
+         	 context.lineWidth = 2;
+         	 context.stroke();
+
+         	 context.rotate(-Math.PI/30);
+         }
+           
+
+
+          // 把之前关于context的设置进行恢复。
+          context.restore();
+
+          //之后的操作还是使用保存的设置环境.左上角作为0,0点
+		}
+
+	</script>	
+	
+</body>
+</html>

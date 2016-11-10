@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<button id="save" type="button">保存</button>
+	<script>
+	// sessionStorage 保存的数据，多个页面不能共享
+	// localStorage 可以
+
+	// 一旦网页关闭 session 会话结束 ，使用sessionStorage保存的本地数据就会被自动清除掉
+	// localStorage 不会
+		var  saveButton = document.getElementById('save');
+		saveButton.onclick = function(){
+			sessionStorage.setItem('123','mysesiontestvalue');
+		}
+	</script>
+</body>
+</html>

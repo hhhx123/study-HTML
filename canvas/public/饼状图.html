@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{margin: 0;padding: 0;}
+		#mycanvas{margin: 100px auto;display: block;}
+	</style>
+</head>
+<body>
+	<canvas width="400" height="400" id="mycanvas" style="border:1px solid black"></canvas>
+	<script>
+		var canvas = document.getElementById('mycanvas');
+        var context = canvas.getContext('2d');
+
+        var data = [25,15,35,25];
+        var colorArry = ['red','green','blue','yellow'];
+        drawPai();
+        drawText();
+        function drawPai(){
+             context.save();
+            
+             context.translate(200,200);
+             context.rotate(-Math.PI/2);
+             for (var i = 0; i < data.length; i++) {
+             	 context.beginPath();
+             	  var number  = data[i];
+             	  var radius = number*2*Math.PI/100;
+             	  var color = colorArry[i];
+             	  context.moveTo(0,0);
+             	  context.arc(0,0,100,0,radius,false);
+             	  context.fillStyle = color;
+             	  context.fill();
+
+             	  //旋转绘制过的弧度
+             	  context.rotate(radius);  
+             }
+
+
+             context.restore();
+        }
+        function drawText(){
+        	// 绘制文字
+        	for (var i = 0; i < data.length; i++) {
+        		context.beginPath();
+        		context.fillStyle = colorArry[i];
+        		context.fillRect(250,30*i+4,20,20);
+        		// 绘制文字
+        		var text = '第'+ (i+1) +'季度' +data[i] + '%';
+        		context.textAlign = 'start';
+        		context.textBaseline = 'middle';
+                context.fillText(text,300,30*i+14,200);
+        	}
+        }
+      
+
+
+
+	</script>	
+	
+</body>
+</html>

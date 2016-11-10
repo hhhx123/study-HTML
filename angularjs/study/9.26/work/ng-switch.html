@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app='myapp'>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<style type="text/css" media="screen">
+	span{padding: 15px 20px;
+		background:#d3d3d3;}
+	span.active{background:pink;}
+	/*.col1{background:#fff;color:#000;}
+	.col2{background:#d3d3d3;color:#fff;}*/
+	.a{margin: 20px 0px;border:1px solid grey;}
+	.b{margin: 20px 80px;border:1px solid grey;}
+	.c{margin: 20px 170px;border:1px solid grey;}
+</style>
+<body >
+<div ng-controller="switchCon">
+	<div ng-switch="mySwitch">
+		<div ng-swith-when="henan">河南</div>
+		<div ng-swith-when="kaifeng">开封</div>
+		<div ng-swith-when="zhengzhou">郑州</div>
+	</div>		
+  <!--  
+  <div>
+    <div ng-if="mySwitch=='henan'">显示河南</div>
+    <div ng-if="mySwitch=='kaifeng'">显示开封</div>
+    <div ng-if="mySwitch=='zheengzhou'">显示郑州</div>
+  </div>
+  -->
+	
+</div>
+
+<script src="app/bower_components/angular/angular.js"></script>	
+<script>
+	var app = angular.module('myapp',[]);
+	app.controller('switchCon',['$scope',function($scope){
+		$scope.mySwitch = henan;
+		
+	}])
+		
+
+
+
+
+		
+	
+		
+
+</script>
+</body>
+</html>

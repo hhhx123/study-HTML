@@ -1,0 +1,34 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+<ul>
+	<li>
+		<a>
+			<div>
+				<span>1234</span>
+			</div>
+		</a>
+	</li>
+	<li>2</li>
+	<li>3</li>
+</ul>
+<script type="text/javascript" src="../lib/jquery-3.1.0.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		
+		$('ul').on('click','li',function(e){
+			console.log('ul click');
+		});
+		$('ul li').click(function(e){
+			// $(e.currentTarget).remove();
+			console.log('li click');
+		});
+
+
+	})
+</script>
+</body>
+</html>

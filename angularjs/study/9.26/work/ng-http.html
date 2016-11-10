@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="app/bower_components/angular/angular.js"></script>	
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body ng-controller="mycontroller">
+	<script>
+		var app = angular.module('myapp',[]);
+		app.controller('mycontroller',["$scope","$http",function($scope,$http){
+			$http({
+				url:"test.json",
+				type:"get",
+				params:{
+
+				}
+			}).success(function(res){
+				console.log(res.data.list);
+			});
+		}]);
+	</script>
+</body>
+</html>

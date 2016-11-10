@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<!-- 什么是线程，什么是进程？
+       进程：一个运行中的程序，一个静态的概念，地址空间；
+       线程：进程中的执行序列，动态的概念，一个线程只能属于一个进程，一个进程中可以包含很多的线程。
+
+       一个进程，至少有一个线程，称为主线程，通常负责UI的响应与更新，该线程是系统帮我们生成的。
+
+       使用多线程的原因:为了防止在单线程中一个操作占据大量的cpu时间，从而导致界面无法及时响应（至导致整个浏览器崩溃),引入多个执行序列,也就是多线程，把耗时的操作放到子线程中去，HTML5 应用worker 来生成子线程。
+        
+       worker(一个线程)
+       1:生成一个worker, 分为两种worker ,一个叫独立的worker,一个worker在一个页面中。另外一个叫共享worker,SharedWorker,多个页面可以共享
+       
+       H5中进程的限制
+       js中的不能访问Dom 只能用来计算 可以使用worker
+       var worker = new Worker('js文件');
+
+       2:线程之间的通信，使用postMessage 的方式来完成
+	 -->
+     <button id="button1" type="button">计算</button>
+     <button id="button2" type="button">响应</button>
+
+     <script>
+     // 判断浏览器是否支持
+     if (Window.worker) {
+
+     }else{
+
+     }
+     var worker = null;
+     	document.getElementById('button1').onclick = function(){
+     		// for (var i = 0; i < 100000; i++) {
+     		// 	console.log(i);
+     		// }
+     		worker = new Worker('worker.js');
+     		// 给worker发一个消息 让worker开始工作
+     		worker.postMessage(0);
+     	}
+     	document.getElementById('button2').onclick = function(){
+     		alert("hello");
+     	}
+     </script>
+</body>
+</html>

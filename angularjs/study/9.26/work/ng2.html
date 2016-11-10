@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app='myapp'>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+<!--div为 view层 -->
+<div ng-controller="cont2">
+<input type="text" ng-change='changeFn()' ng-model="username">
+<input type="text"  ng-model="phone" name="phone">
+<input type="text"  ng-model="password" name="password">
+<!-- <div ng-controller="cont3">{{username2}}</div> -->
+<div ng-click="clickFn()">点击提交</div>
+	
+
+</div>
+<script src="app/bower_components/angular/angular.js"></script>	
+<script>
+	var app = angular.module('myapp',[]);
+	app.controller('cont2',['$scope','$timeout',function($scope,$timeout,$http){
+		$scope.changeFn = function(){
+			console.log($scope.username);
+		}
+		// $timeout(function(){
+		// 	console.log($scope.username);
+		// },1000);
+		$scope.clickFn =function(){
+			console.log({
+		    username:$scope.username,
+			password:$scope.password,
+			phone:$scope.phone,
+		   })} 
+		}]);	
+		// app.controller('cont3',['$scope',function($scope){
+  //            $scope.username2 = 
+  //            }]);
+		
+
+
+
+
+		
+	
+		
+
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{margin: 0;padding: 0;}
+		div{width: 400px;height: 400px;border:1px solid black;}
+	</style>
+</head>
+<body>
+	<div id="desc">
+		
+	</div>
+	<img id="src" src="images/u=1465266830,3764690936&fm=15&gp=0.jpg" alt="" draggble='true' style="cursor:move;">
+	<script>
+// html5 提供支持拖放的操作，允许把一个元素拖放到另外一个容器内
+// 浏览器的默认操作下支持拖放操作
+// 1:设置元素的属性dragable='true'
+// 2:操作拖放的流程
+// 一个源对象 一个目的对象
+// 在整个拖放过程中，在源对象和目的对象上会产生一系列的事件，重写事件，控制拖放
+// dragstart  发生在源对象上，开始拖放时产生
+// drag       发生在源对象上，拖动中一直产生事件
+// dragenter  发生在目的对象上，当拖动进入区域内时发生
+// dragover   发生在目标对象上，拖动在区域内部移动时持续发生
+// drop       发生在目标对象上，当鼠标松开，这里需要处理拖放事件
+// dropleave  发生在目标对象上，当拖动对象离开区域时发生
+// dropend    发生在源对象上，拖动完成时触发
+
+var srcEle = document.getElementById('src');
+var descEle = document.getElementById('desc');
+
+// 必填
+// 配置数据项
+srcEle.ondragstart = function(e){
+      // 为了在源和目的之间传输数据
+      // e中有一个对象  dataTransfer,由他负责数据的配额
+      // setData  配置数据
+      // getData  获取数据
+      // setData中有两个参数，参数1，指明数据格式
+      // 参数2,数据
+     
+      e.dataTransfer.setData('text/plain',srcEle.id);
+      // text/plain 纯文本
+      // text/html html
+      // text/test 自定义
+
+       // effectAllowed:本次拖放做什么操作
+       // copy 复制一份
+       // move  移动
+       // none 不允许做拖放操作
+       // link  只能针对链接来做，类似于拖放一个快捷方式
+       // all
+      e.dataTransfer.effectAllowed = 'move';
+     // 阻止冒泡
+     e.stopPropagation();
+     
+
+}
+// 告诉浏览器，desc 接受src元素，因为默认情况下不允许一个元素接受其他的元素
+descEle.ondragover= function(e){
+   e.preventDefault();
+   e.stopPropagation();
+   return true;
+}
+// 处理拖放的结构
+descEle.ondrop = function(e){
+	// 获取拖放的数据
+	var data = e.dataTransfer.getData('text/plain');
+	// 通过id 获取拖动的源
+	var element = document.getElementById(data);
+	// 把元素添加到内部
+	this.appendChild(element);
+	e.preventDefault();
+	e.stopPropagation();
+	return false;
+}
+srcEle.ondragend = function(){
+	alert('拖放效果')
+}
+
+	</script>
+</body>
+</html>

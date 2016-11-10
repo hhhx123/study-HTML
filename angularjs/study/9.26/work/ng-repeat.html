@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html ng-app='myapp'>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<style>
+	.col1{background:pink;}
+	.col2{background:yellow;}
+</style>
+<body ng-controller="ngstyleC">
+ <ul>
+ 	<li ng-repeat="arrEle in arr"
+ 	ng-class-odd="{col1:true}" ng-class-even="{col2:true}">
+ 		<span>{{arrEle}}</span>
+ 	</li>
+ </ul>
+ <div ng-style="mystyle">
+ 	ng-style
+ </div>
+ <input type="checkbox" ng-checked="true"><br>
+ <input type="text" ng-disable="true"><br>
+ <select>
+ 	<option value="">1</option>
+ 	<option ng-select="true">2</option>
+ 
+ </select><br>
+ <input type="text" ng-readonly="true">
+<script src="app/bower_components/angular/angular.js"></script>	
+<script>
+	var app = angular.module('myapp',[]);
+	app.controller('ngstyleC',['$scope',function($scope){
+		$scope.arr = [0,1,2,3];
+	}])
+		
+     var app = angular.module('myapp',[]);
+	app.controller('ngstyleC',['$scope',function($scope){
+		$scope.mystyle = {
+			background:'red',
+			color:'#fff',
+			fontSize:'16px'
+		};
+	}])
+
+
+
+		
+	
+		
+
+</script>
+</body>
+</html>

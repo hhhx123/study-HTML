@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+	<form id="formid" action="#" method="get" accept-charset="utf-8">
+		<input id="input1" type="text" name="">
+		<input id="input2" type="text" name="">
+		<input type="submit" name="" value="提交">
+	</form>
+ <button id="delete" type="button">删除按钮</button>
+	<script>
+		var formEle = document.getElementById('formid');
+         formEle.onsubmit = function(){
+         	var input1Value = document.getElementById('input1').value;
+         	var date = new Date();
+         	date.setDate(date.getDate() + 4);
+         	// key = name
+         	document.cookie = 'name'+ input1Value + ';expires=' + date;
+         }
+         function setCookie(name,value,expires){
+         	var date = new Date();
+         	date.setDate(date.getDate() + expires);
+         	//格式：name = value; expires = 日期 
+         	document.cookie = 'name'+ '=' + value + ';expires=' + date;
+         }
+         getCookie(name);
+         var deleteButton = document.getElementById('delete');
+         deleteButton.onclick = function(){
+
+         // 删除cookie,只需要设置cookie过期即可
+         // document.cookie = 'name=1;expires=昨天'
+          setCookie('name','1',-1);
+      }
+
+         
+          function getCookie(name){
+         // 读取
+         // document.cookie
+         // 第一步使用; 进行切割字符串
+         var array = document.cookie.split('; ');
+         // name1=123;expires=20150917000
+         // name2=abc;
+         // name3=xyz;
+         for (var i = 0; i < array.length; i++) {
+         	var array2 = array[i].split('=');
+         	if (array2[0]=='name1'){
+         		return array2[1];
+         	}
+         }
+}
+	</script>
+</body>
+</html>

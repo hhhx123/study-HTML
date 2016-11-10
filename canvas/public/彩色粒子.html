@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{margin: 0;padding: 0;}
+	</style>
+</head>
+<body>
+	<canvas id="canvasId"></canvas> 
+		
+	<script>
+		var canvas = document.getElementById('canvasId');
+		var context = canvas.getContext('2d');
+         canvas.width = document.documentElement.clientWidth || document.body.clientWidth;
+          canvas.height = document.documentElement.clientHeight || document.body.clientHeight;
+          canvas.style.backgroundColor = 'black';
+        // context.arc(0,0,10,0,2PI);
+         
+        // 所有的粒子放在数组中
+        var praticleArray = []; 
+        var one =new Praticle(canvas.width/2,canvas.height/2);
+        // 使用定时器不断的生成粒子，然后让粒子不断的移动
+        var timer = setInterval(function(){
+        	context.clearRect(0,0,canvas.width,canvas.height)
+             praticleArray.push (new Praticle(canvas.width/2,canvas.height/2));
+             for (var i=0; i <praticleArray.length ;  i++) {
+             	var praticle = praticleArray[i];
+             	praticle.draw();
+             	praticle.update();
+             }
+             // 根据当前的坐标绘制粒子
+             // one.draw();
+             // 修改粒子的圆心坐标
+             // one.update();
+        },50);
+        // 生成一个粒子类 
+        function Praticle(xPos,yPos){
+        	this.xPos = xPos;
+        	this.yPos = yPos;
+        	this.yOffset = -10;
+        	this.gravity = 0.2;
+        	this.xOffset = Math.random()*7 -3;
+        	
+        }
+        Praticle.prototype.draw = function(){
+                context.beginPath();
+                context.arc(this.xPos,this.yPos,10,0,Math.PI*2,false);
+                context.fillStyle = randomColor();
+                context.fill();
+
+        }
+        
+        Praticle.prototype.update = function(){
+        	this.xPos += this.xOffset;
+        	this.yPos += this.yOffset;
+        	this.yOffset +=this.gravity;
+        }
+        function randomColor(){
+        	'rgb(255,13,30)'
+        	var red = Math.floor(Math.random()*255);
+        	var green = Math.floor(Math.random()*255);
+        	var blue = Math.floor(Math.random()*255);
+        	return 'rgb('+ red + ',' + green + ',' + blue + ')';
+
+        }
+	</script>
+	
+</body>
+</html>

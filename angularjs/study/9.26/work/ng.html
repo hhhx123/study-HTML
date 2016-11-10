@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html ng-app='myapp'>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<link rel="stylesheet" href="">
+</head>
+<body>
+<!--div为 view层 -->
+<div ng-controller="cont01">
+	{{name}}
+</div>
+<script src="app/bower_components/angular/angular.js"></script>	
+<script>
+// ng-app='myapp' ng-app 指定angularja可识别的范围
+// controller里面的依赖前置['$scope','$http'];
+	var app = angular.module('myapp',[]);
+	// $timeout 是对setTimeout的封装
+	app.controller('cont01',['$scope','$timeout','$interval',function($scope,$timeout,$interval){
+		// $timeout(function(){
+		// $scope.name = "hello world 第二次"
+		// },3000);
+		$scope.name = 1;
+		$interval(function(){
+			$scope.name = $scope.name+1;
+		},2000)
+		 }]);
+		/*原生js写法
+		var name = 1;
+		  setInterval(function(){
+          document.querySelector('div').innerHTML = ++name;
+		  },2000);*/
+		  
+		// $scope是model层的作用范围，作用域
+		// $scope.name = "hello world"
+
+</script>
+</body>
+</html>

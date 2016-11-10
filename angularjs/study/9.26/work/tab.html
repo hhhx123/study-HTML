@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<script src="app/bower_components/angular/angular.js"></script>	
+	<title></title>
+	<link rel="stylesheet" href="">
+	<style>
+		*{padding: 0;margin: 0;}
+		body{
+			font-family:"微软雅黑"; 
+			width: 800px;
+			margin: 10px auto;
+			background:#f5f4f3;
+			font-size:18px;
+		    
+		}
+		li{list-style:none;}
+		.nav-class{padding:20px 25px;}
+			.nav-class span{
+				padding: 15px 5px;
+				margin-right:10px;
+				cursor:pointer;
+				font-size:16px;
+				
+			}
+	.nav-class span:hover,.nav-class span.active{
+				border-bottom:3px solid #43aefc;
+			}
+			
+	.clear:after{
+					content:"";display: block;clear: both;
+					height: 0;overflow: hidden;
+				}
+	  .clear{-ms-zoom:1;}
+	  .head-class li{
+	  	float: left;text-align:center;
+	  }
+	  .head-class{margin-top:-3px;margin:-3px 25px;
+	  	background:#f5f4f3;line-height: 44px;}
+	  li.width0{width: 350px;}
+	  li.width1{width: 130px;}
+	  li.width2{width: 125px;}
+	  li.width3{width:  125px;}
+	  .box{
+	  	width: 800px;
+	  	background:#fff;
+	  	min-height:500px;
+	  }
+	</style>
+</head>
+<body ng-controller="myController">
+<div class="box">
+	<div class="nav-class">
+		<span class="active">全部</span>
+		<span>已支付</span>
+		<span>未支付</span>
+	</div>
+	<div class="head-class">
+		<ul class="clear">
+			<li class="width0">项目信息</li>
+			<li class="width1">实付款(元)</li>
+			<li class="width2">交易状态</li>
+			<li class="width3">操作</li>
+		</ul>
+	</div>
+	<div class="show-class">
+		<ul>
+			
+		</ul>
+	</div>
+</div>
+	
+
+<script>
+	var app = angular.module('myapp',[]);
+	app.controller('switchCon',['$scope',function($scope){
+		$scope.dataArr = henan;
+		
+	}])
+</script>
+</body>
+</html>
